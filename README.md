@@ -1,8 +1,8 @@
 # Credit Default Prediction – Model Comparison
 
 
-[![R](https://img.shields.io/badge/R-276DC3?style=flat&logo=r&logoColor=white)]()
-[![License](https://img.shields.io/badge/license-MIT-green)]()
+[![R](https://img.shields.io/badge/R-276DC3?style=flat&logo=r&logoColor=white)](https://www.r-project.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ## 1. Project Overview
 
