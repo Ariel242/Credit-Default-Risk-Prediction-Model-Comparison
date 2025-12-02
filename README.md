@@ -1,5 +1,9 @@
 # Credit Default Prediction – Model Comparison
 
+
+[![R](https://img.shields.io/badge/R-276DC3?style=flat&logo=r&logoColor=white)]()
+[![License](https://img.shields.io/badge/license-MIT-green)]()
+
 ## 1. Project Overview
 
 This project builds and compares several supervised machine-learning models for **predicting credit default risk at the individual-loan level**.  
