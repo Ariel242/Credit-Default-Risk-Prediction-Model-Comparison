@@ -101,64 +101,56 @@ Each model is trained and tuned separately, then evaluated on the **same test se
 
 ## 6. Key Evaluation Plots
 
-This section shows four core plots used to understand model performance, calibration, and drivers of risk.
+This section presents four core plots used to understand model performance and risk trade-offs on the test set.
 
 ### 6.1 ROC Curves – Test Set
 
-![ROC curves – Test set](figures/roc_curves_test.png)
+![ROC curves – all models (Test set)](figures/plots/roc_curves_all_models_test.png)
 
 **Description:**  
 Receiver Operating Characteristic (ROC) curves for all models on the **test set**.  
 - The closer a curve is to the **top-left corner**, the better the discrimination between default and non-default.  
-- The **area under the curve (AUC)** summarizes overall ranking quality across all possible thresholds.  
+- The **area under the curve (AUC)** summarizes overall ranking quality across all thresholds.  
 - Models with consistently higher ROC curves and AUC values are preferred from a pure ranking perspective.
 
 ---
 
-### 6.2 Precision–Recall Curves – Test Set
+### 6.2 AUC-ROC Comparison – Test Set
 
-![Precision–Recall curves – Test set](figures/pr_curves_test.png)
+![AUC-ROC comparison – all models (Test set)](figures/plots/auc_roc_comparison_all_models_test.png)
 
 **Description:**  
-Precision–Recall curves for all models on the **test set**, focusing on the **default (minority) class**.  
-- Precision answers: “Of the loans predicted as high-risk, how many actually default?”  
-- Recall answers: “Of all true defaults, how many did we catch?”  
-- For imbalanced problems like default prediction, PR-AUC is often more informative than ROC-AUC.  
-- Models with higher curves in the high-risk region allow the bank to **target high-risk borrowers more accurately**.
+Bar / point comparison of **AUC-ROC** across all models on the **test set**.  
+- Each bar represents one model’s overall ability to rank risky vs. non-risky loans.  
+- This plot allows a quick comparison of which model family performs best in terms of discrimination.  
+- The recommended model is chosen among the top performers, taking into account both AUC and business considerations.
 
 ---
 
-### 6.3 Calibration Plot – Recommended Model
+### 6.3 Sensitivity–Precision Trade-off – Test Set
 
-![Calibration plot – Test set](figures/calibration_best_model.png)
+![Sensitivity–Precision trade-off – all models (Test set)](figures/plots/sensitivity_precision_tradeoff_test.png)
 
 **Description:**  
-Calibration of the **recommended model** (the model chosen for business use) on the **test set**.  
-- The x-axis shows the **predicted probability of default** (PD).  
-- The y-axis shows the **observed default rate** in each probability bucket.  
-- A well-calibrated model lies close to the 45° line (predicted PD ≈ observed default rate).  
-- Good calibration is crucial when PDs are used for:
-  - Risk-based pricing,
-  - Capital allocation,
-  - Provisioning and stress testing.
+Sensitivity–Precision trade-off by model on the **test set** (each point represents a model at a chosen operating threshold).  
+- **Sensitivity (Recall):** share of true defaults correctly identified as high risk.  
+- **Precision:** share of predicted high-risk loans that actually default.  
+- This view highlights how each model behaves at realistic decision thresholds and how different models support **conservative vs. aggressive** credit policies.
 
 ---
 
-### 6.4 Feature Importance – Recommended Model
+### 6.4 XGBoost – Test Confusion Matrix
 
-![Feature importance – Recommended model](figures/feature_importance_best_model.png)
+![XGBoost confusion matrix – Test set](figures/plots/xgboost_confusion_matrix_test.png)
 
 **Description:**  
-Relative importance of the top predictors in the **recommended model** (e.g., Random Forest / XGBoost).  
-Typical important drivers include:
+Confusion matrix for the **XGBoost model** on the **test set**, at a representative operating threshold.  
+- Shows counts of **True Positives, False Positives, True Negatives, and False Negatives**.  
+- Helps translate model performance into concrete business terms:
+  - How many defaults are caught vs. missed.
+  - How many good customers are incorrectly flagged as high-risk.  
+- This is useful for discussing the model with business stakeholders and aligning on acceptable error trade-offs.
 
-- **Credit bureau signals:** default on file, credit history length.  
-- **Loan terms:** grade, interest rate, loan amount.  
-- **Applicant capacity:** income level, debt burden, employment length.  
-
-Understanding these drivers supports **transparent risk policy**, helps explain decisions to management and regulators, and guides further feature engineering.
-
----
 
 ## 7. Business Implications
 
